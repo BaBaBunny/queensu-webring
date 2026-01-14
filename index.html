@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen's Webrings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: monospace;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .webrings {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        a {
+            display: block;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #333;
+            text-decoration: none;
+            color: #333;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Queen's Webrings</h1>
+        <p>Select a webring to explore student sites</p>
+        
+        <div class="webrings">
+            <a href="math.html">Math Webring</a>
+            <a href="cs.html">CS Webring</a>
+            <a href="ece.html">ECE Webring</a>
+            <a href="bcom.html">BCom Webring</a>
+        </div>
+    </div>
+</body>
+</html>
