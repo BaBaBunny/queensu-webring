@@ -44,7 +44,7 @@ let createWebringList = (matchedSiteIndices) => {
     if (isSearchItem) {
       link.className += " text-mustard-100"
     } else {
-      link.className += " text-mustard-500"
+      link.className += " text-info-grey"
     }
 
     const spacer = document.createElement("span");
@@ -128,6 +128,16 @@ function init() {
   const logo = document.getElementById("webring-logo");
   if (logo) {
     logo.src = `./assets/icons/${program}/icon-white.png`;
+  }
+
+  const info = document.getElementById("webring-info");
+  if (info) {
+    const count = window.webringData.sites.length;
+    if (count === 0) {
+      info.textContent = `This webring has no members yet. Be the first to join!`;
+    } else {
+      info.textContent = `This webring consists of ${count} member${count !== 1 ? 's' : ''}. It was last updated on January 26, 2026.`;
+    }
   }
 
   createWebringList(window.webringData.sites.map((_, i) => i));
