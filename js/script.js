@@ -130,6 +130,16 @@ function init() {
     logo.src = `./assets/icons/${program}/icon-white.png`;
   }
 
+  const info = document.getElementById("webring-info");
+  if (info) {
+    const count = window.webringData.sites.length;
+    if (count === 0) {
+      info.textContent = `This webring has no members yet. Be the first to join!`;
+    } else {
+      info.textContent = `This webring consists of ${count} member${count !== 1 ? 's' : ''}. It was last updated on January 26, 2026.`;
+    }
+  }
+
   createWebringList(window.webringData.sites.map((_, i) => i));
 
   if (searchInput) {

@@ -13,11 +13,13 @@
         }
     </script>
 </head>
-<body class="home-page">
-    <main class="container">
+<body class="home-page" style="background-color: #0c0c0c; color: #e6e6e6; font-family: monospace;">
+    <main style="padding: 1.5rem 1rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center;">
+        <hr class="divider w-full sm:w-3/5 lg:w-2/5">
         <section class="hero" aria-labelledby="hero-title">
+
             <div class="hero-card hero-above-fold">
-                <h1 id="hero-title">QueensU Webring</h1>
+                <h1 id="hero-title">QUEENSU WEBRING</h1>
                 <p class="intro">Welcome to the official webring for Queen's University students!</p>
                 <hr class="divider">
                 <div id="three-container" class="three-container" aria-hidden="true"></div>
@@ -31,21 +33,27 @@
                     <a href="webrings.html#bcom">BCom Webring</a>
                 </div>
 
+                <hr class="divider">
+
+                <h2 id="about-title">What is a Webring?</h2>
+                <hr class="divider">
                 <section class="section" id="about" aria-labelledby="about-title">
-                    <h2 id="about-title">What is a Webring?</h2>
-                    <hr class="divider">
                     <p>The QueensU Webring connects student-built sites into one shared network. It helps visitors discover projects, portfolios, and stories from across the Queens community.</p>
                     <p>Each ring links out to individual sites while making it easy to hop between them. This keeps student work visible and encourages collaboration.</p>
                 </section>
 
+                <hr class="divider">
+
+                <h2 id="join-title">How to Join</h2>
+                <hr class="divider">
                 <section class="section" aria-labelledby="join-title">
-                    <h2 id="join-title">How to Join</h2>
-                    <hr class="divider">
-                    <p>Pick the webring that fits your program, then submit your site to the ring maintainer. Once approved, your site will appear in the directory and start receiving traffic from the ring.</p>
+                    <p>Pick the webring that fits your program, then submit a pull request with the corresponding details. Once approved, your site will appear in the directory and function as part of the ring!</p>
                     <p>Have a question or want to add a new ring? Reach out to the organizers and we will help you get set up.</p>
                 </section>
+
             </div>
         </section>
+        <hr class="divider w-full sm:w-3/5 lg:w-2/5">
     </main>
     <script type="module" src="js/three-scene.js"></script>
 </body>
