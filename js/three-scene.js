@@ -34,7 +34,7 @@ if (container) {
     const fov = THREE.MathUtils.degToRad(camera.fov);
     const fitHeightDistance = modelMaxDim / (2 * Math.tan(fov * 0.5));
     const fitWidthDistance = fitHeightDistance / camera.aspect;
-    const distance = Math.max(fitHeightDistance, fitWidthDistance) * 1.3;
+    const distance = Math.max(fitHeightDistance, fitWidthDistance) * 1.1;
     camera.near = distance / 100;
     camera.far = distance * 100;
     camera.position.set(0, 0, distance);
@@ -83,6 +83,7 @@ if (container) {
       box.getCenter(center);
       model.position.sub(center);
       modelMaxDim = Math.max(size.x, size.y, size.z) || 1;
+      modelGroup.scale.setScalar(0.9);
       fitCameraToModel();
     },
     undefined,
