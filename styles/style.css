@@ -175,6 +175,10 @@ body.home-page p {
     width: 100%;
 }
 
+.hero-card .divider + .intro {
+    margin-top: var(--space-1);
+}
+
 .webring-intro {
     margin-top: var(--space-1);
 }
