@@ -1,6 +1,6 @@
 import { fuzzyMatch, formatUrl } from "./helpers.js";
 
-let createWebringList = (matchedSiteIndices) => {
+let createWebringList = (matchedSiteIndices, hasSearchTerm = false) => {
   const webringList = document.getElementById("webring-list");
   webringList.innerHTML = "";
 
@@ -11,9 +11,7 @@ let createWebringList = (matchedSiteIndices) => {
 
     const listItem = document.createElement("div");
     listItem.className = "grid grid-cols-12 sm:grid-cols-6 gap-2 sm:gap-4";
-    const isSearchItem =
-      matchedSiteIndices.includes(index) &&
-      matchedSiteIndices.length !== window.webringData.sites.length;
+    const isSearchItem = hasSearchTerm && matchedSiteIndices.includes(index);
     if (isSearchItem) {
       listItem.className += " bg-mustard-500";
     }
@@ -65,18 +63,22 @@ let createWebringList = (matchedSiteIndices) => {
   }
 };
 function filterWebring(searchTerm) {
-  const searchLower = searchTerm.toLowerCase();
+  const searchLower = searchTerm.toLowerCase().trim();
+  const hasSearchTerm = searchLower.length > 0;
   const matchedSiteIndices = [];
   window.webringData.sites.forEach((site, index) => {
-    if (
-      site.name.toLowerCase().includes(searchLower) ||
-      fuzzyMatch(site.website.toLowerCase(), searchLower) ||
-      site.year.toString().includes(searchLower)
-    ) {
+    if (!hasSearchTerm) {
+      matchedSiteIndices.push(index);
+      return;
+    }
+    const nameMatch = site.name && site.name.toLowerCase().includes(searchLower);
+    const websiteMatch = site.website && fuzzyMatch(site.website.toLowerCase(), searchLower);
+    const yearMatch = site.year != null && site.year.toString().includes(searchLower);
+    if (nameMatch || websiteMatch || yearMatch) {
       matchedSiteIndices.push(index);
     }
   });
-  createWebringList(matchedSiteIndices);
+  createWebringList(matchedSiteIndices, hasSearchTerm);
 }
 let navigateWebring = () => {
   const fragment = window.location.hash.slice(1); // #your-site-here?nav=
