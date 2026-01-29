@@ -5,7 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUEENSU-WEBRING</title>
     <link rel="icon" type="image/png" href="./assets/icons/artsci/icon-white.png">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script>
+    (async function() {
+      var hash = window.location.hash.slice(1);
+      if (!hash) return;
+
+      var rings = ['cs', 'eng', 'artsci', 'bcom'];
+
+      if (rings.includes(hash.split('?')[0])) return;
+
+      document.documentElement.style.visibility = 'hidden';
+
+      var parts = hash.split('?');
+      var siteFragment = parts[0];
+      var params = parts[1] ? new URLSearchParams(parts[1]) : null;
+      var nav = params ? params.get('nav') : null;
+      var navTrimmed = nav ? nav.replace(/\/+$/, '').trim() : '';
+
+      var helpers = await import('./js/helpers.js');
+      var fuzzyMatch = helpers.fuzzyMatch;
+
+      try {
+        var allRings = await Promise.all(
+          rings.map(function(ring) {
+            return fetch('sites/' + ring + '.json')
+              .then(function(r) { return r.json(); })
+              .then(function(sites) { return { ring: ring, sites: sites }; })
+              .catch(function() { return { ring: ring, sites: [] }; });
+          })
+        );
+
+        for (var i = 0; i < allRings.length; i++) {
+          var ring = allRings[i];
+          var index = ring.sites.findIndex(function(site) {
+            return fuzzyMatch(siteFragment, site.website);
+          });
+          if (index === -1) continue;
+
+          if (navTrimmed === 'next' || navTrimmed === 'prev') {
+            var increment = navTrimmed === 'next' ? 1 : -1;
+            var newIndex = (index + increment) % ring.sites.length;
+            if (newIndex < 0) newIndex = ring.sites.length - 1;
+            window.location.href = ring.sites[newIndex].website;
+          } else {
+            window.location.href = 'webrings.html#' + ring.ring;
+          }
+          return;
+        }
+      } catch (e) {
+        console.error('Webring navigation error:', e);
+      }
+
+      document.documentElement.style.visibility = '';
+    })();
+    </script>
+
     <script type="importmap">
         {
             "imports": {
@@ -32,7 +88,7 @@
                     <a class="hero-button" onclick="fetch('sites/cs.json').then(r=>r.json()).then(cs=>fetch('sites/artsci.json').then(r=>r.json()).then(artsci=>fetch('sites/eng.json').then(r=>r.json()).then(eng=>fetch('sites/bcom.json').then(r=>r.json()).then(bcom=>{const all=[...cs,...artsci,...eng,...bcom].filter(s=>s.website);if(all.length)window.location.href=all[Math.floor(Math.random()*all.length)].website}))))" style="cursor:pointer">Random</a>
                 </div>  
                 <hr class="divider">
-                <p class="intro webring-intro">Select a program-specific webring to explore student websites!</p>
+                <p class="intro webring-intro">Select a program's webring to explore student websites!</p>
 
                 <div class="webrings">
                     <a class="webring-card" href="webrings.html#artsci">
